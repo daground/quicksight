@@ -28,7 +28,7 @@ FROM
 			asc_.timestamp as first_date, desc_.timestamp as last_date,
 			asc_.balance as first_bal, desc_.balance as last_bal,
 			desc_.balance/asc_.balance - 1 as cum_ret,
-			power(desc_.balance/asc_.balance, 365/46) - 1 as apy
+			power(desc_.balance/asc_.balance, 365/DATEDIFF(desc_.timestamp,asc_.timestamp)) - 1 as apy
 	FROM
 		(SELECT * FROM tmp WHERE rn_asc = 1) asc_
 		JOIN
