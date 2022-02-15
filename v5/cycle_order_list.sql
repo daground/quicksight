@@ -1,5 +1,6 @@
 -- TODO
--- cancel, partially filled에 PNL이 있는지 확인 WITH long_order AS
+-- cancel, partially filled에 PNL이 있는지 확인 
+WITH long_order AS
 (
 	SELECT  a.clOrdId
 	       ,a.bot
@@ -156,4 +157,4 @@ SELECT  co.bot
        ,co.szMatchPnL
 FROM ind
 RIGHT JOIN cycle_orders co
-ON co.bot=ind.bot AND co.coin=ind.coin
+ON co.bot=ind.bot AND co.coin=ind.coin;

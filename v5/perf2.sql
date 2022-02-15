@@ -24,10 +24,10 @@ WITH id AS
 	             WHEN v.num=11 THEN '2022-01-30 22:29:15'  ELSE '2022-01-30 01:39:40' END AS init
 	FROM
 	(
-		SELECT  @num:=@num+1 AS num
+		SELECT  ROW_NUMBER() OVER (order by ts) AS num
 		FROM
 		(
-			SELECT  @num:=0
+			SELECT  ts
 			FROM valuation
 			LIMIT 12
 		) val
@@ -70,22 +70,21 @@ WITH id AS
 ), sh AS
 (
 	SELECT  bot
-	       ,std(ret)                                                                       AS std
-	       ,AVG(ret)                                                                       AS avg
+	       ,std(ret)                                                                       AS std_ret
+	       ,avg(ret)                                                                       AS avg_ret
 	       ,(unix_timestamp(MAX(updatedAt))-unix_timestamp(MIN(updatedAt))) div (60*60*24) AS days
 	FROM daily_ret
 	GROUP BY  bot
 )
 SELECT  val.bot
-       ,val.totalBal
        ,val.updatedAt                                    AS latest
        ,id.init                                          AS init_time
        ,val.init_amt
        ,val.totalBal
        ,round(val.ret,4)                                 AS cum_ret
-       ,avg * 365/sh.days                                AS APY
-       ,sh.std * sqrt(365/sh.days)                       AS APS
-       ,(avg * 365/sh.days)/(sh.std * sqrt(365/sh.days)) AS sharpe_ratio
+       ,avg_ret * 365/sh.days                                AS APY
+       ,sh.std_ret * sqrt(365/sh.days)                       AS APS
+       ,(avg_ret * 365/sh.days)/(sh.std_ret * sqrt(365/sh.days)) AS sharpe_ratio
 FROM val
 JOIN id
 JOIN sh

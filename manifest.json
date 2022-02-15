@@ -1,0 +1,1 @@
+{"fileLocations": [{"URIPrefixes": ["s3://daground-quant/stage/cwl/quicksight/data"]}], "globalUploadSettings": {"format": "CSV", "delimiter": ",", "textqualifier": "'", "containsHeader": "true"}}
