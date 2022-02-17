@@ -1,6 +1,6 @@
 -- TODO
--- cancel, partially filled에 PNL이 있는지 확인 
-WITH long_order AS
+-- cancel, partially filled에 PNL이 있는지 확인
+-- szMatchPnL까지 반영한 PnL 만들기 WITH long_order AS
 (
 	SELECT  a.clOrdId
 	       ,a.bot
