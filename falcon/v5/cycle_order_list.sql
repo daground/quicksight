@@ -69,7 +69,7 @@ WITH long_order AS
 	FROM
 	(
 		SELECT  bot
-		       ,SUBSTRING_INDEX(clOrdId,'v',2) AS cycle_id
+		       ,SUBSTRING_INDEX(clOrdId,'v',3) AS cycle_id
 		       ,'name'
 		       ,MIN(uTime)                     AS startTime
 		       ,MAX(uTime)                     AS endTime
@@ -88,7 +88,7 @@ WITH long_order AS
 	JOIN
 	(
 		SELECT  bot
-		       ,SUBSTRING_INDEX(clOrdId,'v',2) AS cycle_id
+		       ,SUBSTRING_INDEX(clOrdId,'v',3) AS cycle_id
 		       ,'name'
 		       ,MIN(uTime)                     AS startTime
 		       ,MAX(uTime)                     AS endTime
