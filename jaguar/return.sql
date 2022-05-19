@@ -63,3 +63,32 @@ JOIN
 	WHERE d.bot!="t" 
 ) g
 ON i.bot=e.bot AND e.bot=g.bot ;
+
+
+WITH curr AS
+(
+	SELECT  bot
+	       ,marginBalance
+	       ,updateTime
+	       ,timestamp
+	FROM jaguar.account_info
+	WHERE asset = "USDT"
+	AND HOUR(timestamp) = 0
+	AND MINUTE(timestamp) = 0
+	ORDER BY timestamp DESC 
+), day_ago AS
+(
+	SELECT  *
+	FROM curr AND timestamp < from_unixtime
+	(unix_timestamp() - 60*1440
+	)
+	LIMIT 1
+), week_ago AS
+(
+	SELECT  *
+	FROM curr AND timestamp < from_unixtime
+	(unix_timestamp() - 60*1440*7
+	)
+	LIMIT 1
+);
+
